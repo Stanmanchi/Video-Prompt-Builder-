@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Custom Video Prompt Builder</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <img src="your-logo.png" alt="Your Logo" />
+      <h1>Your Custom Video Prompt Builder</h1>
+    </header>
+    <div id="prompt-builder">
+      <h2>Let's Create Your Video Prompt</h2>
+      <label for="video-type">What type of video do you want to create?</label>
+      <input type="text" id="video-type" placeholder="e.g., Advertisement Video" />
+      <label for="duration">How long should the video be?</label>
+      <input type="number" id="duration" placeholder="Duration in seconds" />
+      <button onclick="generatePrompt()">Generate Prompt</button>
+    </div>
+    <footer>
+      <p>Branded by Your Name</p>
+    </footer>
+
+    <script>
+      function generatePrompt() {
+        const videoType = document.getElementById('video-type').value;
+        const duration = document.getElementById('duration').value;
+        const prompt = `Create a ${videoType} that is ${duration} seconds long.`;
+        alert(prompt);
+      }
+    </script>
+  </body>
+</html>
