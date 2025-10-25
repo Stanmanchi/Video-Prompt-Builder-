@@ -1,0 +1,137 @@
+// Arrays for Swipes, Slides, and Transitions (all 200 swipes, slides, and transitions)
+const swipes = [ /* all 200 swipes from earlier */ ];
+const slideshows = [ /* all 200 slideshows from earlier */ ];
+const transitions = [ /* all transitions, same as before */ ];
+
+// Function to get user inputs from the questionnaire
+function getUserInputs() {
+  const videoType = document.getElementById('video-type').value; // Product, Service, etc.
+  const narration = document.getElementById('narration').value; // Yes/No
+  const companyName = document.getElementById('company-name').value; // User's company name
+  const logo = document.getElementById('logo').value; // Yes/No for logo inclusion
+  const brandedItems = document.getElementById('branded-items').value; // Yes/No for branded items like t-shirts
+  const socialMediaHandles = {
+    facebook: document.getElementById('facebook').value,
+    instagram: document.getElementById('instagram').value,
+    twitter: document.getElementById('twitter').value,
+    linkedin: document.getElementById('linkedin').value,
+    tiktok: document.getElementById('tiktok').value
+  };
+  const website = document.getElementById('website').value; // User's website
+  const contactNumber = document.getElementById('contact-number').value; // Contact number
+  const email = document.getElementById('email').value; // Email address
+  const whatsappNumber = document.getElementById('whatsapp-number').value; // WhatsApp number
+  const videoDuration = parseInt(document.getElementById('video-duration').value); // Desired video duration in seconds
+  const aspectRatio = document.getElementById('aspect-ratio').value; // Aspect ratio (16:9, 4:3, etc.)
+  const tone = document.getElementById('tone').value; // Tone of video (Emotional, Informative, etc.)
+  const transitionSpeed = document.getElementById('transition-speed').value; // Slow/fast swipes
+  const autoScript = document.getElementById('auto-script').value; // Yes/No (Auto script generation)
+
+  // Return all user inputs in an object
+  return {
+    videoType, narration, companyName, logo, brandedItems,
+    socialMediaHandles, website, contactNumber, email, whatsappNumber, videoDuration,
+    aspectRatio, tone, transitionSpeed, autoScript
+  };
+}
+
+// Function to generate a 8-second script for each scene, including contact details
+function generateScript(sceneNumber, inputs) {
+  let script = `This is the script for scene ${sceneNumber}. This will be an 8-second segment.`;
+
+  // Automatically include contact info in the script if provided
+  if (inputs.companyName) {
+    script += ` For more details, visit ${inputs.companyName}'s website: ${inputs.website}. `;
+  }
+  
+  if (inputs.contactNumber) {
+    script += ` You can reach us at our phone number: ${inputs.contactNumber}. `;
+  }
+
+  if (inputs.whatsappNumber) {
+    script += ` For quick inquiries, contact us via WhatsApp: ${inputs.whatsappNumber}. `;
+  }
+
+  if (inputs.socialMediaHandles.facebook) {
+    script += ` Follow us on Facebook: ${inputs.socialMediaHandles.facebook}. `;
+  }
+
+  if (inputs.socialMediaHandles.instagram) {
+    script += ` Check us out on Instagram: ${inputs.socialMediaHandles.instagram}. `;
+  }
+
+  if (inputs.socialMediaHandles.twitter) {
+    script += ` Don't forget to follow us on Twitter: ${inputs.socialMediaHandles.twitter}. `;
+  }
+
+  if (inputs.socialMediaHandles.linkedin) {
+    script += ` Connect with us on LinkedIn: ${inputs.socialMediaHandles.linkedin}. `;
+  }
+
+  if (inputs.socialMediaHandles.tiktok) {
+    script += ` Follow us on TikTok for more updates: ${inputs.socialMediaHandles.tiktok}. `;
+  }
+
+  return script;
+}
+
+// Function to generate the video prompt based on user inputs
+function generatePrompt() {
+  const inputs = getUserInputs();
+
+  // Calculate the number of scenes based on video duration
+  const scenesNeeded = Math.ceil(inputs.videoDuration / 8); 
+
+  // Generate scripts for each scene
+  let scripts = [];
+  if (inputs.autoScript === 'Yes') {
+    for (let i = 1; i <= scenesNeeded; i++) {
+      scripts.push(generateScript(i, inputs));
+    }
+  } else {
+    scripts = ['User will provide their own scripts for each scene.'];
+  }
+
+  // Randomly select effects based on the chosen video type
+  const selectedSwipe = swipes[Math.floor(Math.random() * swipes.length)];
+  const selectedSlide = slideshows[Math.floor(Math.random() * slideshows.length)];
+  const selectedTransition = transitions[Math.floor(Math.random() * transitions.length)];
+
+  // Build the final prompt
+  let prompt = `
+    You are creating a ${inputs.videoType} with the following details:
+    
+    Company Name: ${inputs.companyName}
+    Logo: ${inputs.logo}
+    Branded Items: ${inputs.brandedItems}
+    Website: ${inputs.website}
+    Contact Number: ${inputs.contactNumber}
+    Email: ${inputs.email}
+    WhatsApp Number: ${inputs.whatsappNumber}
+
+    Social Media Handles:
+      - Facebook: ${inputs.socialMediaHandles.facebook}
+      - Instagram: ${inputs.socialMediaHandles.instagram}
+      - Twitter: ${inputs.socialMediaHandles.twitter}
+      - LinkedIn: ${inputs.socialMediaHandles.linkedin}
+      - TikTok: ${inputs.socialMediaHandles.tiktok}
+
+    Aspect Ratio: ${inputs.aspectRatio}
+    Tone: ${inputs.tone}
+    Transition Speed: ${inputs.transitionSpeed}
+
+    Video Duration: ${inputs.videoDuration} seconds
+    Number of Scenes: ${scenesNeeded} scenes (each 8 seconds long)
+
+    Script for each scene:
+    ${scripts.join('\n')}
+    
+    Selected Effects:
+      - Swipe: ${selectedSwipe}
+      - Slide Show: ${selectedSlide}
+      - Transition: ${selectedTransition}
+  `;
+
+  // Show the generated prompt
+  alert(prompt);
+}
